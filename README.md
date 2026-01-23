@@ -16,7 +16,8 @@ Click the lemon. Get a random image. Repeat until joy is achieved.
 └── images/
 
 ##Live
-https://hm2003MK.github.io/shalaya-zone/
+
+(https://hm2003mk.github.io/shalayaclickme/)
 
 ## Tech
 HTML · CSS · Vanilla JavaScript · GitHub Pages
