@@ -4,21 +4,21 @@ A playful Y2K-inspired birthday microsite built with plain HTML, CSS, and JavaSc
 
 Click the lemon. Get a random image. Repeat until joy is achieved.
 
-## ✨ What it does
+## What it does
 - Random image generator (no repeats until all images are seen)
 - Lemon button 🍋 + keyboard support (Space = next image)
 - Lightweight UI with nostalgic early-internet vibes
 - Fully static site (no frameworks, no backend)
 
-## 🗂️ Structure
+## Structure
 ├── index.html
 ├── images.json
 └── images/
 
-## 🌐 Live
+##Live
 https://hm2003MK.github.io/shalaya-zone/
 
-## 🛠 Tech
+## Tech
 HTML · CSS · Vanilla JavaScript · GitHub Pages
 
 ---
