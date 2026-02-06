@@ -653,6 +653,23 @@
       box-shadow: 0 3px 0 rgba(0,0,0,0.14);
     }
 
+    /* ===== OREGON MAP bits ===== */
+    .map-wrap{
+      border-radius: 16px;
+      border: 3px solid rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.82);
+      padding: 10px;
+      box-shadow: 0 16px 28px rgba(0,0,0,0.14);
+    }
+    .map-sub{
+      font-weight: 900;
+      font-size: 12px;
+      opacity: .8;
+      margin: 8px 0 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
     /* LEMON MAD MODE */
     body.lemon-mad{
       filter: hue-rotate(120deg) saturate(2);
@@ -711,7 +728,7 @@
           </nav>
 
           <div class="ticker">
-            <span>✨ ONLINE NOW ✨ PRESS SPACE FOR NEXT PIC ✨ TYPE “LEMON” FOR A SECRET 🍋✨</span>
+            <span>✨ ONLINE NOW ✨ PRESS SPACE FOR NEXT PIC ✨ TYPE “LEMON” FOR A SECRET 🍋✨ • TYPE “OREGON” FOR A MAP 🗺️✨</span>
           </div>
         </header>
 
@@ -793,6 +810,12 @@
 
             <div class="badge">Now Playing <span class="counter">♪</span></div>
 
+            <!-- ===== THE PITT COUNTDOWN (shows only Thursdays) ===== -->
+            <div id="pittWrap" style="display:none;">
+              <div class="badge">THE PITT <span class="counter" id="pittCountdown">--:--:--</span></div>
+              <div class="mini">Every Thursday • Countdown to 9:00 PM ET</div>
+            </div>
+
             <div class="chat">
               <h4>Chat (fake)</h4>
               <div class="chatbox">
@@ -807,7 +830,8 @@
             <div class="badge">STATUS <span class="counter">LOADED</span></div>
 
             <div class="mini">
-              secret hint: type <span class="counter">lemon</span> anywhere
+              secret hint: type <span class="counter">lemon</span> anywhere<br>
+              secret hint 2: type <span class="counter">oregon</span> anywhere
             </div>
           </aside>
         </div>
@@ -817,6 +841,7 @@
 
   <div class="toast" id="toast"></div>
 
+  <!-- LEMON SECRET MODAL -->
   <div class="modal" id="modal">
     <div class="modal-card" role="dialog" aria-modal="true" aria-label="Secret Lemon Page">
       <div class="modal-title">🍋 YOU FOUND THE LEMON ZONE 🍋</div>
@@ -831,6 +856,90 @@
         </div>
         <div class="modal-actions">
           <button type="button" id="closeModal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== OREGON MAP MODAL ===== -->
+  <div class="modal" id="oregonModal">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Atlanta to Oregon Map">
+      <div class="modal-title">🗺️ ATLANTA → OREGON (MONKI TRAVEL MODE)</div>
+      <div class="modal-inner">
+        <p>Destination unlocked: Oregon.</p>
+
+        <div class="map-wrap">
+          <svg id="travelMap" viewBox="0 0 900 420" width="100%" height="340" role="img" aria-label="Stylized map with travel path">
+            <!-- Simple “map” background -->
+            <rect x="0" y="0" width="900" height="420" rx="18" ry="18" fill="rgba(255,255,255,0.85)"/>
+            <rect x="14" y="14" width="872" height="392" rx="16" ry="16" fill="rgba(17,17,17,0.06)"/>
+
+            <!-- Cute grid -->
+            <g opacity="0.25">
+              <path d="M70 40 V380" stroke="rgba(0,0,0,0.35)" stroke-width="2"/>
+              <path d="M160 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M250 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M340 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M430 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M520 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M610 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M700 40 V380" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M790 40 V380" stroke="rgba(0,0,0,0.35)" stroke-width="2"/>
+
+              <path d="M40 90 H860" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M40 170 H860" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M40 250 H860" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+              <path d="M40 330 H860" stroke="rgba(0,0,0,0.25)" stroke-width="2"/>
+            </g>
+
+            <!-- Labels -->
+            <text x="70" y="72" font-family="Arial" font-weight="900" font-size="16" fill="rgba(0,0,0,0.72)">WEST</text>
+            <text x="780" y="72" font-family="Arial" font-weight="900" font-size="16" fill="rgba(0,0,0,0.72)">EAST</text>
+
+            <!-- Points (approx positions on this stylized map) -->
+            <!-- Oregon point -->
+            <circle id="ptOregon" cx="170" cy="140" r="10" fill="rgba(106,53,255,0.85)" stroke="rgba(0,0,0,0.18)" stroke-width="3"/>
+            <text x="190" y="146" font-family="Arial" font-weight="900" font-size="14" fill="rgba(0,0,0,0.72)">OREGON</text>
+
+            <!-- Atlanta point -->
+            <circle id="ptAtlanta" cx="705" cy="270" r="10" fill="rgba(255,59,182,0.85)" stroke="rgba(0,0,0,0.18)" stroke-width="3"/>
+            <text x="725" y="276" font-family="Arial" font-weight="900" font-size="14" fill="rgba(0,0,0,0.72)">ATLANTA, GA</text>
+
+            <!-- Path from Atlanta to Oregon -->
+            <path id="travelPath"
+              d="M705 270 C 610 210, 520 165, 410 165 C 300 165, 240 125, 170 140"
+              fill="none"
+              stroke="rgba(0,0,0,0.28)"
+              stroke-width="10"
+              stroke-linecap="round"
+              opacity="0.35"
+            />
+            <path
+              d="M705 270 C 610 210, 520 165, 410 165 C 300 165, 240 125, 170 140"
+              fill="none"
+              stroke="rgba(255,138,43,0.95)"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-dasharray="14 10"
+              opacity="0.9"
+            />
+
+            <!-- Moving arrow group -->
+            <g id="arrowGroup" transform="translate(705 270) rotate(0)">
+              <circle r="14" fill="rgba(255,255,255,0.88)" stroke="rgba(0,0,0,0.18)" stroke-width="3"></circle>
+              <polygon points="-2,-8 14,0 -2,8 2,0" fill="rgba(106,53,255,0.95)"></polygon>
+            </g>
+
+            <!-- Sparkles -->
+            <text x="58" y="390" font-size="18">✨✨✨</text>
+            <text x="750" y="390" font-size="18">🍋✨🗺️</text>
+          </svg>
+
+          <div class="map-sub">Type “oregon” again anytime to reopen ✨</div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="closeOregon">Close</button>
         </div>
       </div>
     </div>
@@ -854,13 +963,22 @@
     const soundToggle = document.getElementById("soundToggle");
     const soundState = document.getElementById("soundState");
 
-      const rxnButtons = [
+    // ===== THE PITT COUNTDOWN elements =====
+    const pittWrap = document.getElementById("pittWrap");
+    const pittCountdown = document.getElementById("pittCountdown");
+
+    // ===== OREGON MAP elements =====
+    const oregonModal = document.getElementById("oregonModal");
+    const closeOregon = document.getElementById("closeOregon");
+    const travelPath = document.getElementById("travelPath");
+    const arrowGroup = document.getElementById("arrowGroup");
+
+    const rxnButtons = [
       { key: "love",  el: document.getElementById("rxn_love") },
       { key: "lol",   el: document.getElementById("rxn_lol") },
       { key: "cry",   el: document.getElementById("rxn_cry") },
       { key: "lemon", el: document.getElementById("rxn_lemon") }
     ];
-
 
     // ===== State =====
     let images = [];
@@ -875,7 +993,6 @@
     const unlocked = new Set();
 
     // ===== Sounds (optional; user must toggle ON first) =====
-    // Tiny beep made with WebAudio so no file needed.
     let audioCtx = null;
     function beep(freq = 880, ms = 70) {
       if (!soundOn) return;
@@ -890,9 +1007,7 @@
         g.connect(audioCtx.destination);
         o.start();
         setTimeout(() => { o.stop(); }, ms);
-      } catch (e) {
-        // ignore audio errors
-      }
+      } catch (e) {}
     }
 
     // ===== Toast =====
@@ -948,18 +1063,15 @@
     }
 
     function checkAchievements(){
-      // clicks
       if (clickCount >= 1) unlock("first", "First Lemon Click 🍋");
       if (clickCount >= 10) unlock("ten", "10 Lemons Clicked 🍋🍋🍋");
       if (clickCount >= 25) unlock("twentyfive", "25 Lemon Presses (Certified Icon)");
       if (clickCount >= 50) unlock("fifty", "50 Lemon Presses (Touch Grass?)");
 
-      // unique views in a cycle
       if (uniqueSeen.size >= 5) unlock("fivepics", "5 Unique Pics Seen ✨");
       if (uniqueSeen.size >= 10) unlock("tenpics", "10 Unique Pics Seen 💿");
       if (images.length && uniqueSeen.size >= images.length) unlock("allpics", "ALL PICS SEEN (Legendary)");
 
-      // reactions
       const totalRxn = rxnCounts.love + rxnCounts.lol + rxnCounts.cry + rxnCounts.lemon;
       if (totalRxn >= 1) unlock("react1", "First Reaction Click 😍");
       if (totalRxn >= 10) unlock("react10", "10 Reactions Given (Emotionally Available)");
@@ -968,7 +1080,6 @@
     // ===== Fake loader animation =====
     function startFakeLoader(){
       bar.style.width = "0%";
-      // little staged fill so it looks alive
       setTimeout(() => bar.style.width = "35%", 40);
       setTimeout(() => bar.style.width = "70%", 140);
     }
@@ -987,7 +1098,6 @@
       img.classList.add("loading");
       statusEl.textContent = `loading… ${selected}`;
 
-      // 1% chance to anger the lemon
       if (Math.random() < 0.01) {
         document.body.classList.add("lemon-mad");
         toast("🍋 YOU HAVE ANGERED THE LEMON");
@@ -1008,9 +1118,7 @@
         statusEl.textContent = "LOADED ✅";
         seenEl.textContent = `Seen ${uniqueSeen.size} / ${images.length}`;
 
-        // tiny “success” sound
         beep(880, 60);
-
         checkAchievements();
       };
 
@@ -1026,7 +1134,7 @@
       loader.src = selected;
     }
 
-    // ===== Debounce clicks (optional but keeps it smooth) =====
+    // ===== Debounce clicks =====
     let locked = false;
     function tryNext(){
       if (locked) return;
@@ -1057,15 +1165,55 @@
       }
     });
 
-    // ===== Easter egg: type "lemon" anywhere =====
+    // ===== THE PITT COUNTDOWN (Thursday-only, 9pm ET) =====
+    function pad2(n){ return String(n).padStart(2, "0"); }
+
+    function nowInET(){
+      // Creates a Date object that matches "wall clock" Eastern Time
+      // (works well in modern browsers)
+      return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+    }
+
+    function updatePitt(){
+      const et = nowInET();
+      const isThursday = et.getDay() === 4; // 0=Sun ... 4=Thu
+
+      if (!isThursday) {
+        pittWrap.style.display = "none";
+        return;
+      }
+
+      pittWrap.style.display = "block";
+
+      const target = new Date(et);
+      target.setHours(21, 0, 0, 0); // 9:00 PM ET today
+
+      const diff = target - et;
+
+      if (diff <= 0) {
+        pittCountdown.textContent = "NOW ✅";
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+
+      pittCountdown.textContent = `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+    }
+
+    updatePitt();
+    setInterval(updatePitt, 1000);
+
+    // ===== Easter eggs: type "lemon" or "oregon" anywhere =====
     let buffer = "";
     document.addEventListener("keydown", (e) => {
-      // keep buffer small
       const k = (e.key || "").toLowerCase();
       if (k.length !== 1 || !/[a-z]/.test(k)) return;
 
       buffer += k;
-      if (buffer.length > 10) buffer = buffer.slice(-10);
+      if (buffer.length > 14) buffer = buffer.slice(-14);
 
       if (buffer.includes("lemon")) {
         buffer = "";
@@ -1073,15 +1221,79 @@
         toast("🍋 secret unlocked");
         beep(1040, 90);
       }
+
+      if (buffer.includes("oregon")) {
+        buffer = "";
+        openOregon();
+      }
     });
 
-    // ===== Modal close =====
+    // ===== Modal close (lemon) =====
     closeModal.addEventListener("click", () => modal.classList.remove("show"));
     modal.addEventListener("click", (e) => {
       if (e.target === modal) modal.classList.remove("show");
     });
+
+    // ===== OREGON MAP modal + moving arrow animation =====
+    let mapAnim = null;
+    let mapStart = 0;
+
+    function openOregon(){
+      oregonModal.classList.add("show");
+      toast("🗺️ oregon unlocked");
+      beep(920, 70);
+      startMapAnimation();
+    }
+
+    function closeOregonModal(){
+      oregonModal.classList.remove("show");
+      stopMapAnimation();
+    }
+
+    closeOregon.addEventListener("click", closeOregonModal);
+    oregonModal.addEventListener("click", (e) => {
+      if (e.target === oregonModal) closeOregonModal();
+    });
+
+    function startMapAnimation(){
+      stopMapAnimation();
+      if (!travelPath || !arrowGroup) return;
+
+      const pathLen = travelPath.getTotalLength();
+      mapStart = performance.now();
+
+      const tick = (t) => {
+        if (!oregonModal.classList.contains("show")) return;
+
+        const elapsed = t - mapStart;
+        const dur = 4200; // ms
+        const p = (elapsed % dur) / dur; // 0..1 loop
+
+        const len = p * pathLen;
+        const pt = travelPath.getPointAtLength(len);
+        const pt2 = travelPath.getPointAtLength(Math.min(len + 1, pathLen));
+
+        const angle = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
+
+        arrowGroup.setAttribute("transform", `translate(${pt.x} ${pt.y}) rotate(${angle})`);
+
+        mapAnim = requestAnimationFrame(tick);
+      };
+
+      mapAnim = requestAnimationFrame(tick);
+    }
+
+    function stopMapAnimation(){
+      if (mapAnim) cancelAnimationFrame(mapAnim);
+      mapAnim = null;
+    }
+
+    // ===== ESC closes any open modal =====
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") modal.classList.remove("show");
+      if (e.key === "Escape") {
+        modal.classList.remove("show");
+        closeOregonModal();
+      }
     });
 
     // ===== Reactions =====
@@ -1105,7 +1317,6 @@
       soundOn = !soundOn;
       updateSoundUI();
       toast(soundOn ? "🔊 sound on" : "🔇 sound off");
-      // try to unlock audio context on first user gesture
       if (soundOn) beep(880, 60);
     });
 
@@ -1122,10 +1333,7 @@
           return;
         }
 
-        // Start with one image immediately
         showNext();
-
-        // Welcome toast
         setTimeout(() => toast("Press SPACE for next pic ✨"), 500);
       })
       .catch(() => {
@@ -1135,3 +1343,4 @@
   </script>
 </body>
 </html>
+
