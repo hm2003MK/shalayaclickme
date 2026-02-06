@@ -945,6 +945,10 @@
       </div>
     </div>
   </div>
+<audio id="monkeyAudio" preload="auto">
+  <source src="monkey.mp3" type="audio/mpeg">
+  <source src="monkey.ogg" type="audio/ogg">
+</audio>
 
   <script>
     // ===== Elements =====
@@ -963,60 +967,20 @@
 
     const soundToggle = document.getElementById("soundToggle");
     const nowPlayingBtn = document.getElementById("nowPlayingBtn");
-    function monkeyNoise() {
-  // works even if your sound toggle is OFF (because this is the point of the button)
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const monkeyAudio = document.getElementById("monkeyAudio");
 
-    const ctx = audioCtx;
-    const now = ctx.currentTime;
-
-    // quick helper
-    const play = (type, freq, t, dur, gain) => {
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.type = type;
-      o.frequency.setValueAtTime(freq, t);
-      g.gain.setValueAtTime(gain, t);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(g);
-      g.connect(ctx.destination);
-      o.start(t);
-      o.stop(t + dur);
-    };
-
-    // "ook-ook" style pattern (cartoony monkey chatter)
-    play("square", 520, now + 0.00, 0.08, 0.08);
-    play("square", 420, now + 0.10, 0.07, 0.08);
-    play("square", 680, now + 0.20, 0.06, 0.07);
-    play("square", 360, now + 0.28, 0.09, 0.07);
-
-    // little “chirp” tail
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.type = "sawtooth";
-    o.frequency.setValueAtTime(900, now + 0.40);
-    o.frequency.exponentialRampToValueAtTime(1800, now + 0.55);
-    g.gain.setValueAtTime(0.04, now + 0.40);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.56);
-    o.connect(g);
-    g.connect(ctx.destination);
-    o.start(now + 0.40);
-    o.stop(now + 0.56);
-
-    toast("🐵 monki noises!");
-  } catch (e) {
-    toast("🐵 (monki noises unavailable)");
-  }
-}
-
-if (nowPlayingBtn) {
+    if (nowPlayingBtn && monkeyAudio) {
   nowPlayingBtn.addEventListener("click", () => {
-    monkeyNoise();
+    try {
+      monkeyAudio.currentTime = 0; // restart sound every click
+      monkeyAudio.play();
+      toast("🐵 MONKI NOISES");
+    } catch (e) {
+      toast("🐵 sound blocked (click again)");
+    }
   });
 }
 
-    
     const soundState = document.getElementById("soundState");
 
     // ===== THE PITT COUNTDOWN elements =====
